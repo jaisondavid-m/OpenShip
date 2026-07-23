@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	// "github.com/joho/godotenv"
 
 	"server/config"
 	"server/db"
@@ -14,27 +15,25 @@ import (
 
 func main() {
 
-	cfg := config.Load()
-
-	database, err := db.New(cfg)
-
-	if err != nil {
-		log.Fatalf("failed to connect to database: %v",err)
+	// godotenv.Load()
+	
+	if err := db.Connect(config.DSN()); err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	defer database.Close()
+	defer db.DB.Close()
 
-	if cfg.AppEnv == "producation" {
+	if config.AppEnv == "producation" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	r := gin.Default()
 
-	routes.Register(r, database)
+	routes.Register(r)
 
-	addr := ":" + cfg.AppPort
+	addr := ":" + config.AppPort
 
-	log.Printf("starting server on %s (env=%s)", addr, cfg.AppEnv)
+	log.Printf("starting server on %s (env=%s)", addr, config.AppEnv)
 
 	if err := r.Run(addr); err != nil {
 		log.Fatalf("server error: %v", err)

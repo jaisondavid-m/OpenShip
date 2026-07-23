@@ -3,30 +3,36 @@ package config
 import (
 
 	"fmt"
-	"log"
 	"os"
-	
+
 	"github.com/joho/godotenv"
 
 )
 
-func Load() *Config {
+var (
+	AppPort 	string
+	AppEnv 		string
+	DBHost 		string
+	DBPort 		string
+	DBUser 		string
+	DBPassword 	string
+	DBName 		string
+	JWTSecret 	string
+)
 
-	if err := godotenv.Load(); err != nil {
-		log.Println("no .env file found, relying on system environment variables")
-	}
+func init() {
 
-	cfg := &Config{
-		AppPort: getEnv("APP_PORT","8080"),
-		AppEnv: getEnv("APP_ENV","development"),
-		DBHost: getEnv("DB_HOST","localhost"),
-		DBPort: getEnv("DB_PORT","3306"),
-		DBUser: getEnv("DB_USER","root"),
-		DBPassword: getEnv("DB_PASSWORD",""),
-		DBName: getEnv("DB_NAME","open_ship"),
-	}
+	godotenv.Load()
+	
+	AppPort		= getEnv("APP_PORT","8080")
+	AppEnv		= getEnv("APP_ENV","development")
+	DBHost 		= getEnv("DB_HOST","localhost")
+	DBPort		= getEnv("DB_PORT","3306")
+	DBUser		= getEnv("DB_USER","root")
+	DBPassword 	= getEnv("DB_PASSWORD","")
+	DBName		= getEnv("DB_NAME","open_ship")
 
-	return cfg
+	JWTSecret 	= getEnv("JWT_SECRET","testingkeyfortestingpurpose")
 
 }
 
@@ -40,11 +46,11 @@ func getEnv(key, fallback string) string {
 
 }
 
-func (c *Config) DSN() string {
+func DSN() string {
 	
 	return fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?parseTime=true&charset=utf8mb4&loc=Local",
-		c.DBUser, c.DBPassword, c.DBHost, c.DBPort, c.DBName,
+		DBUser, DBPassword, DBHost, DBPort, DBName,
 	)
 
 }

@@ -7,16 +7,16 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 
-	"server/config"
-
 )
 
-func New(cfg *config.Config) (*sql.DB, error) {
+var DB *sql.DB
 
-	conn, err := sql.Open("mysql",cfg.DSN())
+func Connect(dsn string) error {
+
+	conn, err := sql.Open("mysql",dsn)
 
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	conn.SetMaxOpenConns(25)
@@ -24,9 +24,11 @@ func New(cfg *config.Config) (*sql.DB, error) {
 	conn.SetConnMaxIdleTime(5 * time.Minute)
 
 	if err := conn.Ping(); err != nil {
-		return nil, err
+		return err
 	}
 
-	return conn, nil
+	DB = conn
+
+	return nil
 
 }

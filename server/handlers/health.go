@@ -1,28 +1,22 @@
 package handlers
 
 import (
-	"database/sql"
+	
 	"net/http"
+	
+	"server/db"
 
 	"github.com/gin-gonic/gin"
 )
 
-type HealthHandler struct {
-	DB *sql.DB
-}
-
-func NewHealthHandler(db *sql.DB) *HealthHandler {
-	return &HealthHandler{DB: db}
-}
-
-func (h *HealthHandler) Health(c *gin.Context) {
+func Health(c *gin.Context) {
 
 	status := gin.H{
 		"status": "ok",
 		"db": "ok",
 	}
 
-	if err := h.DB.Ping(); err != nil {
+	if err := db.DB.Ping(); err != nil {
 		status["status"] = "degraded"
 		status["db"] = "unreachable"
 		status["error"] = err.Error()
