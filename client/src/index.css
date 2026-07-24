@@ -1,1 +1,69 @@
 @import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@theme {
+
+    --color-os-bg: #0a1220;
+    --color-os-panel: #0d1626;
+    --color-os-console: #060b14;
+    --color-os-border: #1e2c46;
+    --color-os-border-soft: #16213a;
+
+    --color-os-text: #e8edf5;
+    --color-os-muted: #7183a3;
+    --color-os-faint: #4a5a78;
+
+    --color-os-accent: #45d8c0;
+    --color-os-accent-dim: #2c8f80;
+    --color-os-accent-bright: #5be5cf;
+
+    --color-os-warn: #f2a65a;
+    --color-os-danger: #f0616b;
+
+    --font-display: "Space Grotesk", sans-serif;
+    --font-sans: "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+
+    --animate-os-blink: os-blink 1s step-end infinite;
+    --animate-os-pulse: os-pulse 4.8s ease-in-out infinite;
+
+    @keyframes os-pulse {
+        0%, 40% {
+            background-color: #f2a65a;
+            box-shadow: 0 0 8px rgba(242,166,90,0.6);
+        }
+        55%, 100% {
+            background-color: #45d8c0;
+            box-shadow: 0 0 8px rgba(69,216,192,0.6);
+        }
+    }
+
+    @keyframes os-blink {
+        0%,100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+
+}
+
+body {
+    font-family: "Inter", sans-serif;
+}
+
+code,
+pre {
+    font-family: "JetBrains Mono", monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Space Grotesk", sans-serif;
+}
