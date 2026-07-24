@@ -18,6 +18,7 @@ var (
 	DBPassword 	string
 	DBName 		string
 	JWTSecret 	string
+	CorsOrigin 	string
 )
 
 func init() {
@@ -26,6 +27,9 @@ func init() {
 	
 	AppPort		= getEnv("APP_PORT","8080")
 	AppEnv		= getEnv("APP_ENV","development")
+
+	CorsOrigin 	= getEnv("CORS_ORIGIN","http://localhost:5173")
+
 	DBHost 		= getEnv("DB_HOST","localhost")
 	DBPort		= getEnv("DB_PORT","3306")
 	DBUser		= getEnv("DB_USER","root")

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom"
 
-import Test from './pages/Test'
+import Test from './pages/test/Test.jsx'
 
 function App() {
   return (
