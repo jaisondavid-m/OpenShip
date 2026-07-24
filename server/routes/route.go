@@ -19,6 +19,8 @@ func Register(r *gin.Engine) {
 	auth := v1.Group("/auth")
 	{
 		auth.POST("/login", handlers.Login)
+		auth.POST("/register", handlers.Register)
+		auth.GET("/me", handlers.Me)
 		auth.POST("/logout", handlers.Logout)
 	}
 
