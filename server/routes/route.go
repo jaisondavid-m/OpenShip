@@ -5,6 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"server/handlers"
+	"server/middlewares"
+
 )
 
 func Register(r *gin.Engine) {
@@ -20,7 +22,7 @@ func Register(r *gin.Engine) {
 	{
 		auth.POST("/login", handlers.Login)
 		auth.POST("/register", handlers.Register)
-		auth.GET("/me", handlers.Me)
+		auth.GET("/me", middlewares.AuthRequired, handlers.Me)
 		auth.POST("/logout", handlers.Logout)
 	}
 
