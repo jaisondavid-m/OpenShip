@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 
+import DeployConsole from "../../components/auth/DeployConsole.jsx"
+
 import api from "../../api/axios.js"
 
 const inputClasses =
@@ -38,7 +40,7 @@ function Login() {
     }
 
     return (
-        <div className="grid min-h-screen bg-os-bg font-sans text-os-text lg:grid-cols-[minmax(360px,46px)_1fr]" >
+        <div className="grid min-h-screen bg-os-bg font-sans text-os-text lg:grid-cols-[minmax(360px,460px)_1fr]" >
 
             <div className="flex items-center gap-2 border-b border-os-border-soft px-6 py-2.5 font-mono text-[11.5px] text-os-faint lg:hidden" >
                 <span className="h-1.5 w-1.5 rounded-full bg-os-warn motion-safe:animate-os-pulse" />
@@ -108,7 +110,7 @@ function Login() {
                             }
                         </button>
                         <p className="mt-6 text-center text-sm text-os-muted" >
-                            New to OpenShip{" "}
+                            New to OpenShip?{" "}
                             <Link
                                 to="/register"
                                 className="font-medium text-os-accent hover:underline"
@@ -116,10 +118,26 @@ function Login() {
                                 Create an account
                             </Link>
                         </p>
+                        <div className="mt-8 flex flex-col gap-3 border-t border-os-border-soft pt-8" >
+                            <div className="flex items-center gap-2.5 text-sm text-os-muted" >
+                                <span className="h-1 w-1 rounded-full bg-os-accent" />
+                                Deploy from Git or drag-and-drag in seconds
+                            </div>
+                            <div className="flex items-center gap-2.5 text-sm text-os-muted" >
+                                <span className="h-1 w-1 rounded-full bg-os-accent" />
+                                Free subdomain, HTTPS and global CDN included
+                            </div>
+                            <div className="flex items-center gap-2.5 text-sm text-os-muted" >
+                                <span className="h-1 w-1 roundeed-full bg-os-accent" />
+                                Bring your own custom domain anytime
+                            </div>
+                        </div>
                     </form>
                 </div>
             </section>
-
+            <DeployConsole
+                varient="login"
+            />
         </div>
     )
 
