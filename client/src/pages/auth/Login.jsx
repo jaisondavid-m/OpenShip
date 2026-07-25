@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { fetchMe, setCredentials } from "../../store/authSlice.js"
 
 import DeployConsole from "../../components/auth/DeployConsole.jsx"
 
@@ -13,6 +15,7 @@ const inputClasses =
 function Login() {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const [form,setForm] = useState({ email: "", password: "" })
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
@@ -29,7 +32,14 @@ function Login() {
         setLoading(true)
 
         try {
-            await api.post("/auth/login",form)
+            const res = await api.post("/auth/login",form)
+
+            // dispatch(setCredentials({
+            //     user: res.data.user,
+            //     role: res.data.role,
+            // }))
+            await dispatch(fetchMe()).unwrap()
+
             navigate("/home")
         } catch (err) {
             setError(err.response?.data?.error || "Invalid email or password")
@@ -121,14 +131,14 @@ function Login() {
                         <div className="mt-8 flex flex-col gap-3 border-t border-os-border-soft pt-8" >
                             <div className="flex items-center gap-2.5 text-sm text-os-muted" >
                                 <span className="h-1 w-1 rounded-full bg-os-accent" />
-                                Deploy from Git or drag-and-drag in seconds
+                                Deploy from Git or drag-and-drop in seconds
                             </div>
                             <div className="flex items-center gap-2.5 text-sm text-os-muted" >
                                 <span className="h-1 w-1 rounded-full bg-os-accent" />
                                 Free subdomain, HTTPS and global CDN included
                             </div>
                             <div className="flex items-center gap-2.5 text-sm text-os-muted" >
-                                <span className="h-1 w-1 roundeed-full bg-os-accent" />
+                                <span className="h-1 w-1 rounded-full bg-os-accent" />
                                 Bring your own custom domain anytime
                             </div>
                         </div>
