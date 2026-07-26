@@ -47,12 +47,12 @@ func init() {
 	JWTSecret 	= getEnv("JWT_SECRET","testingkeyfortestingpurpose")
 
 	//for checking currently commented this
-	// SMTPHost := getEnv("SMTP_HOST","smtp.gmail.com")
-	// SMTPPort := getEnv("SMTP_PORT", "587")
-	// SMTPUser := getEnv("SMTP_USER", "")
-	// SMTPPassword := getEnv("SMTP_PASSWORD","")
-	// SMTPFrom := getEnv("SMTP_FROM", "jaison7373@gmail.com")
-	// OTPExipryMinutes := getEnvInt("OTP_EXPIRY_MINUTES",10)
+	SMTPHost = getEnv("SMTP_HOST","smtp.gmail.com")
+	SMTPPort = getEnv("SMTP_PORT", "587")
+	SMTPUser = getEnv("SMTP_USER", "")
+	SMTPPassword = getEnv("SMTP_PASSWORD","")
+	SMTPFrom = getEnv("SMTP_FROM", "jaison7373@gmail.com")
+	OTPExipryMinutes = getEnvInt("OTP_EXPIRY_MINUTES",10)
 
 }
 

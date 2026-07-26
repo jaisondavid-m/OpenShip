@@ -84,14 +84,16 @@ func ForgotPassword(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to save otp",
+			// "error": "Failed to save otp",
+			"error":err.Error(),
 		})
 		return
 	}
 
 	if err := utils.SendOTPEmail(input.Email, otp); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to send otp email",
+			// "error": "Failed to send otp email",
+			"error":err.Error(),
 		})
 		return
 	}
