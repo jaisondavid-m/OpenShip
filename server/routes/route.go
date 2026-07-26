@@ -24,6 +24,9 @@ func Register(r *gin.Engine) {
 		auth.POST("/register", handlers.Register)
 		auth.GET("/me", middlewares.AuthRequired, handlers.Me)
 		auth.POST("/logout", handlers.Logout)
+
+		auth.POST("/forgot-password", handlers.ForgotPassword)
+
 	}
 
 }

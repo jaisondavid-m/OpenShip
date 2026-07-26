@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, Navigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 
 import { fetchMe } from "./store/authSlice.js"
@@ -44,6 +44,8 @@ function App() {
       </Route>
 
       <Route path='/test' element={<Test />} />
+
+      <Route path='/' element={<Navigate to="/home" replace />} />
       
     </Routes>
   )

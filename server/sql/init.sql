@@ -10,3 +10,15 @@ CREATE TABLE IF NOT EXISTS users (
 
     UNIQUE KEY uq_users_email (email)
 );
+
+CREATE TABLE IF NOT EXISTS password_resets (
+
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(150)  NOT NULL,
+    otp_hash VARCHAR(255) NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    used BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    INDEX idx_password_reset_email (email)
+);
