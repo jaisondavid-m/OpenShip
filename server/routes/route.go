@@ -26,6 +26,7 @@ func Register(r *gin.Engine) {
 		auth.POST("/logout", handlers.Logout)
 
 		auth.POST("/forgot-password", handlers.ForgotPassword)
+		auth.POST("/verify-otp", handlers.VerifyOTP)
 
 	}
 
