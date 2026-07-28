@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/routes/ProtectedRoute.jsx"
 import Login from "./pages/auth/Login.jsx"
 import Register from "./pages/auth/Register.jsx"
 import Home from "./pages/basics/Home.jsx"
+import ForgotPassword from "./pages/auth/ForgotPassword.jsx"
 import Test from './pages/test/Test.jsx'
 
 
@@ -37,6 +38,7 @@ function App() {
       <Route element={<PublicRoute />} >
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path='/forgot-password' element={<ForgotPassword/>} />
       </Route>
 
       <Route element={<ProtectedRoute/>} >

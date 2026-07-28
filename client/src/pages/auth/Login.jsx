@@ -16,7 +16,7 @@ function Login() {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [form,setForm] = useState({ email: "", password: "" })
+    const [form, setForm] = useState({ email: "", password: "" })
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
 
@@ -32,7 +32,7 @@ function Login() {
         setLoading(true)
 
         try {
-            const res = await api.post("/auth/login",form)
+            const res = await api.post("/auth/login", form)
 
             // dispatch(setCredentials({
             //     user: res.data.user,
@@ -81,7 +81,7 @@ function Login() {
                     )}
                     <form onSubmit={handleSubmit}>
                         <label className="mb-[18px] block text-xs font-medium uppercase tracking-wider text-os-muted" >
-                            Email 
+                            Email
                             <input
                                 type="email"
                                 name="email"
@@ -94,7 +94,16 @@ function Login() {
                             />
                         </label>
                         <label className="mb-[18px] block text-xs font-medium uppercase tracking-wider text-os-muted" >
-                            Password 
+                            {/* Password  */}
+                            <span className="flex items-center justify-between" >
+                                Password
+                                <Link
+                                    to="/forgot-password"
+                                    className="text-[11px] font-medium normal-case tracking-normal text-os-accent hover:underline"
+                                >
+                                    Forgot password?
+                                </Link>
+                            </span>
                             <input
                                 type="password"
                                 name="password"
@@ -106,6 +115,9 @@ function Login() {
                                 className={inputClasses}
                             />
                         </label>
+                        {/* <label className="mb-[18px] block text-xs font-medium uppercase tracking-wider text-os-muted" >
+                             
+                        </label> */}
                         <button
                             type="submit"
                             disabled={loading}
