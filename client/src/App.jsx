@@ -12,6 +12,7 @@ import Login from "./pages/auth/Login.jsx"
 import Register from "./pages/auth/Register.jsx"
 import Home from "./pages/basics/Home.jsx"
 import ForgotPassword from "./pages/auth/ForgotPassword.jsx"
+import Profile from "./pages/basics/Profile.jsx"
 import Test from './pages/test/Test.jsx'
 
 
@@ -43,6 +44,7 @@ function App() {
 
       <Route element={<ProtectedRoute/>} >
         <Route path='/home' element={<Home/>} />
+        <Route path='/profile' element={<Profile/>} />
       </Route>
 
       <Route path='/test' element={<Test />} />
