@@ -1,12 +1,10 @@
 package routes
 
 import (
-
 	"github.com/gin-gonic/gin"
 
 	"server/handlers"
 	"server/middlewares"
-
 )
 
 func Register(r *gin.Engine) {
@@ -29,6 +27,13 @@ func Register(r *gin.Engine) {
 		auth.POST("/verify-otp", handlers.VerifyOTP)
 		auth.POST("/reset-password", handlers.ResetPassword)
 
+	}
+
+	profile := v1.Group("/profile")
+	profile.Use(middlewares.AuthRequired)
+	{
+		profile.GET("/mine", handlers.GetProfile)
+		profile.POST("/avatar", handlers.UploadAvatar)
 	}
 
 }

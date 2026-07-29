@@ -53,6 +53,8 @@ func main() {
 		MaxAge: 12 * time.Hour,
 	}))
 
+	r.Static("/uploads", "./uploads")
+
 	routes.Register(r)
 
 	addr := ":" + config.AppPort

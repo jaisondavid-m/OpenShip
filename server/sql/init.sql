@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
 
     UNIQUE KEY uq_users_email (email)
 );
+ALTER TABLE users ADD COLUMN avatar VARCHAR(255) NULL AFTER role;
 
 CREATE TABLE IF NOT EXISTS password_resets (
 
