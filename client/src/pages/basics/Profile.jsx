@@ -19,6 +19,61 @@ function Profile() {
     const [uploading, setUploading] = useState(false)
     const [avatarBroken, setAvatarBroken] = useState(false)
 
+    useEffect(() => {
+
+        let ignore = false
+
+        async function loadProfile() {
+
+            try {
+                const res = await api.get("/profile/mine")
+                if (!ignore) setUser(res.data.user)
+            } catch (err) {
+                if (!ignore) setError(err.response?.data?.error || "Couldn't load your profile.")
+            } finally {
+                if (!ignore) setLoading(false)
+            }
+
+        }
+
+        loadProfile()
+
+        return () => { ignore = true }
+
+    },[])
+
+    function handlePickAvatar() {
+        fileInputRef.current?.click()
+    }
+
+    async function handleAvatarChange(e) {
+
+        const file = e.target.files?.[0]
+        if (!file) return 
+
+        setError("")
+        setUploading(true)
+        setAvatarBroken(false)
+
+        const formData = new FormData()
+        formData.append("avatar", file)
+
+        try {
+            const res = await api.post("/profile/avatar", formData, {
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+            setUser((u) => ({ ...u, avatar: res.data.avatar }))
+        } catch (err) {
+            setError(err.response?.data?.error || "Avatar upload failed. Try again")
+        } finally {
+            setUploading(false)
+            e.target.value = ""
+        }
+
+    }
+
+    const avatarScr = user?.avatar && !avatarBroken ? `{ASSET_BASE}${user.avatar}` : null
+
     return (
         <div className="min-h-screen bg-os-bg font-sans text-os-text" >
 
@@ -45,7 +100,16 @@ function Profile() {
                             Loading manifest...
                         </div>
                     ) : !user ? null : (
-                        <ProfileMainSection/>
+                        <ProfileMainSection
+                            user={user}
+                            Initials={Initials}
+                            avatarSrc={avatarScr}
+                            setAvatarBroken={setAvatarBroken}
+                            handlePickAvatar={handlePickAvatar}
+                            uploading={uploading}
+                            fileInputRef={fileInputRef}
+                            handleAvatarChange={handleAvatarChange}
+                        />
                     )}
 
                 </div>
