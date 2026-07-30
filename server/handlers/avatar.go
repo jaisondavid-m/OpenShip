@@ -75,7 +75,7 @@ func UploadAvatar(c *gin.Context) {
 		return 
 	}
 
-	publicPath := "/uploads/avatar/" + filename
+	publicPath := "/uploads/avatars/" + filename
 
 	if _, err := db.DB.Exec("UPDATE users SET avatar = ? WHERE id = ?", publicPath, uid); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{

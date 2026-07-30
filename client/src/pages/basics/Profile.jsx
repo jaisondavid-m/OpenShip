@@ -72,7 +72,8 @@ function Profile() {
 
     }
 
-    const avatarScr = user?.avatar && !avatarBroken ? `{ASSET_BASE}${user.avatar}` : null
+    const avatarScr = user?.avatar && !avatarBroken ? `${ASSET_BASE}${user.avatar}` : null
+    console.log(avatarScr)
 
     return (
         <div className="min-h-screen bg-os-bg font-sans text-os-text" >
