@@ -36,4 +36,10 @@ func Register(r *gin.Engine) {
 		profile.POST("/avatar", handlers.UploadAvatar)
 	}
 
+	sandbox := v1.Group("/sandbox")
+	{
+		sandbox.POST("", handlers.SaveSnippet)
+		sandbox.GET("/:id", handlers.GetSnippet)
+	}
+
 }
