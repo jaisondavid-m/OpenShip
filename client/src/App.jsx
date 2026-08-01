@@ -16,6 +16,8 @@ import Profile from "./pages/basics/Profile.jsx"
 import SandBox from "./pages/basics/SandBox.jsx"
 import Test from './pages/test/Test.jsx'
 
+import AppLayout from "./components/layout/AppLayout.jsx"
+
 
 function App() {
 
@@ -40,19 +42,21 @@ function App() {
       <Route element={<PublicRoute />} >
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path='/forgot-password' element={<ForgotPassword/>} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
       </Route>
 
-      <Route element={<ProtectedRoute/>} >
-        <Route path='/home' element={<Home/>} />
-        <Route path='/profile' element={<Profile/>} />
-        <Route path='/sandbox' element={<SandBox/>} />
+      <Route element={<ProtectedRoute />} >
+        <Route element={<AppLayout/>} >
+          <Route path='/home' element={<Home />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/sandbox' element={<SandBox />} />
+        </Route>
       </Route>
 
       <Route path='/test' element={<Test />} />
 
       <Route path='/' element={<Navigate to="/home" replace />} />
-      
+
     </Routes>
   )
 }

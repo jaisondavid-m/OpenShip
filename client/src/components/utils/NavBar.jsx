@@ -92,6 +92,47 @@ function NavBar() {
                 </button>
 
             </div>
+
+            {mobileOpen && (
+                <nav className="flex flex-col gap-1 border-t border-os-border-soft bg-os-panel px-6 py-4 lg:hidden" >
+                    {
+                        NAV_ITEMS.map((item) => (
+                            <Link
+                                key={item.to}
+                                to={item.to}
+                                onClick={closeMobile}
+                                className={`flex items-center gap-2.5 rounded-md px-3 py-2.5 font-mono text-xs uppercase
+                                    tracking-wide transition-colors
+                                        ${
+                                            isActive(item.to)
+                                                ? "bg-os-bg text-os-accent"
+                                                : "text-os-muted hover:bg-os-bg hover:text-os-text"
+                                        }
+                                    `}
+                            >
+                                <span
+                                    className={`h-1.5 w-1.5 rounded-full ${
+                                        isActive(item.to) ? "bg-os-accent" : "bg-os-faint"
+                                    }`}
+                                />
+                                {item.label}
+                            </Link>
+                        ))
+                    }
+                    <button
+                        type="button"
+                        onClick={() => {
+                            closeMobile();
+                            handleLogout();
+                        }}
+                        className="mt-2 rounded-md border-t border-os-border-soft px-3 py-2.5 text-left font-mono text-xs uppercase
+                        tracking-wider text-os-faint hover:text-os-danger"
+                    >
+                        Sign out
+                    </button>
+                </nav>
+            )}
+
         </header>
 
     )
