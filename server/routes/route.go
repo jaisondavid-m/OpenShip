@@ -42,4 +42,6 @@ func Register(r *gin.Engine) {
 		sandbox.GET("/:id", handlers.GetSnippet)
 	}
 
+	v1.GET("/public/:slug", handlers.GetPublicSnippetBySlug)
+
 }
