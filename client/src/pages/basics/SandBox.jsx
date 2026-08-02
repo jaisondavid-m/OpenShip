@@ -22,6 +22,10 @@ function SandBox() {
     const [statusError, setStatusError] = useState("")
     const [copied, setCopied] = useState(false)
 
+    const [slugInput, setSlugInput] = useState("")
+    const [publicSlug, setPublicSlug] = useState(null)
+    const [copiedPublic, setCopiedPublic] = useState(false)
+
     useEffect(() => {
 
         if (!id) return
@@ -39,6 +43,8 @@ function SandBox() {
                     setCode(res.data.snippet.code)
                     setPreviewDoc(res.data.snippet.code)
                     setSaveId(res.data.snippet.id)
+                    setPublicSlug(res.data.snippet.slug || null)
+                    setSlugInput(res.data.snippet.slug || "")
                 }
             } catch (err) {
                 if (!ignore) setStatusError(err.response?.data?.error || "Couldn't load that snippet.")
@@ -78,6 +84,8 @@ function SandBox() {
     function handleReset() {
         setCode("")
         setSaveId(null)
+        setPublicSlug(null)
+        setSlugInput("")
         setStatusError("")
         navigate("/sandbox", { replace: true })
     }
@@ -87,10 +95,13 @@ function SandBox() {
         setSaving(true)
         setStatusError("")
         setCopied(false)
+        setCopiedPublic(false)
 
         try {
             const res = await api.post("/sandbox", { code })
             setSaveId(res.data.id)
+            setPublicSlug(res.data.slug || null)
+            setSlugInput(res.data.slug || "")
             navigate(`/sandbox/${res.data.id}`, { replace: id })
         } catch (err) {
             setStatusError(err.response?.data?.error || "Failed to save snippet")
@@ -116,54 +127,99 @@ function SandBox() {
 
     }
 
+    async function handleCopyPublicLink() {
+
+        if (!publicSlug) return
+
+        const url = `${window.location.origin}/${publicSlug}`
+
+        try {
+            await navigator.clipboard.writeText(url)
+            setCopiedPublic(true)
+            setTimeout(() => setCopiedPublic(false), 1500)
+        } catch {
+            setStatusError("Couldn't copy link.")
+        }
+
+    }
+
     const lineCount = code.split("\n").length
 
     return (
         <div className="flex h-screen flex-col bg-os-bg font-sans text-os-text" >
-            <header className="flex items-center justify-between border-b border-os-border-soft px-6 py-3" >
-                <div className="flex items-center gap-2.5" >
-                    <span className="h-1.5 w-1.5 rounded-full bg-os-accent motion-safe:animate-os-pulse" />
-                    <p className="font-mono text-[11.5px] uppercase tracking-wider text-os-faint" >
-                        {
-                            loadingSnippet
-                                ? "Loading shippet..."
-                                : saveId
-                                    ? `Saved · #${saveId}`
-                                    : "Local sandbox &middot; not deployed"
-                        }
-                    </p>
-                    {statusError && (
-                        <span className="font-mono text-[11px] text-os-danger" >
-                            {statusError}
-                        </span>
-                    )}
-                </div>
-                <div className="flex items-center gap-4" >
-                    {saveId && (
+            <header className="flex flex-col border-b border-os-border-soft px-6 py-3" >
+                <div className="flex items-center justify-between" >
+                    <div className="flex items-center justify-between gap-2.5" >
+                        <span className="h-1.5 w-1.5 rounded-full bg-os-accent motion-safe:animate-os-pulse" />
+                        <p className="font-mono text-[11.5px] uppercase tracking-wider text-os-faint" >
+                            {
+                                loadingSnippet
+                                    ? "Loading shippet..."
+                                    : saveId
+                                        ? `Saved · #${saveId}`
+                                        : "Local sandbox &middot; not deployed"
+                            }
+                        </p>
+                        {statusError && (
+                            <span className="font-mono text-[11px] text-os-danger" >
+                                {statusError}
+                            </span>
+                        )}
+                    </div>
+                    <div className="flex items-center gap-4" >
+                        {saveId && (
+                            <button
+                                type="button"
+                                onClick={handleCopyLink}
+                                className="font-mono text-[11px] uppercase tracking-wider text-os-accent hover:underline"
+                            >
+                                {copied ? "Copied !" : "Copy link"}
+                            </button>
+                        )}
                         <button
                             type="button"
-                            onClick={handleCopyLink}
+                            onClick={handleSave}
+                            disabled={saving}
+                            className="font-mono text-[11px] uppercase tracking-wider text-os-accent hover:underline disabled:opacity-50"
+                        >
+                            {saving ? "Saving" : "Save"}
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleReset}
                             className="font-mono text-[11px] uppercase tracking-wider text-os-accent hover:underline"
                         >
-                            {copied ? "Copied !" : "Copy link"}
+                            Reset Sample
+                        </button>
+                    </div>
+                </div>
+                <div className="flex items-center gap-2" >
+                    <span className="font-mono text-[11px] text-os-faint" >
+                        {window.location.origin}
+                    </span>
+                    <input
+                        type="text"
+                        value={slugInput}
+                        onChange={(e) => setSlugInput(e.target.value)}
+                        placeholder="my-project"
+                        className="w-40 rounded-md border border-os-border-soft bg-os-console px-2 py-1
+                        font-mono text-[11px] text-os-text placeholder:text-os-faint focus:outline-none"
+                    />
+                    {publicSlug && (
+                        <button
+                            type="button"
+                            onClick={handleCopyPublicLink}
+                            className="font-mono text-[11px] uppercase tracking-wider text-os-accent hover:underline"
+                        >
+                            {
+                                copiedPublic
+                                    ? "Copied!"
+                                    : "Copy public link"
+                            }
                         </button>
                     )}
-                    <button
-                        type="button"
-                        onClick={handleSave}
-                        disabled={saving}
-                        className="font-mono text-[11px] uppercase tracking-wider text-os-accent hover:underline disabled:opacity-50"
-                    >
-                        {saving ? "Saving" : "Save"}
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleReset}
-                        className="font-mono text-[11px] uppercase tracking-wider text-os-accent hover:underline"
-                    >
-                        Reset Sample
-                    </button>
                 </div>
+
             </header>
             <div className="grid flex-1 grid grid-cols-1 overflow-hidden lg:grid-cols-2" >
                 <EditorSection
