@@ -98,7 +98,10 @@ function SandBox() {
         setCopiedPublic(false)
 
         try {
-            const res = await api.post("/sandbox", { code })
+            const res = await api.post("/sandbox", {
+                code,
+                slug: slugInput.trim() || undefined,
+            })
             setSaveId(res.data.id)
             setPublicSlug(res.data.slug || null)
             setSlugInput(res.data.slug || "")

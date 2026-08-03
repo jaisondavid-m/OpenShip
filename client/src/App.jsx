@@ -17,6 +17,7 @@ import SandBox from "./pages/basics/SandBox.jsx"
 import Test from './pages/test/Test.jsx'
 
 import AppLayout from "./components/layout/AppLayout.jsx"
+import PublicSnippetView from './pages/public/PublicSnippetView.jsx'
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
 
       <Route path='/test' element={<Test />} />
 
+      <Route path='/:slug' element={<PublicSnippetView/>} />
       <Route path='/' element={<Navigate to="/home" replace />} />
 
     </Routes>

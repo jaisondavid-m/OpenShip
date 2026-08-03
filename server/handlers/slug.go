@@ -18,7 +18,7 @@ func GetPublicSnippetBySlug(c *gin.Context) {
 	var snippet models.Snippet
 	var slugCol sql.NullString
 
-	row := db.DB.QueryRow("SELECT id, code, slug, created_at, updated_at FROM snippets WHERE id = ?", slug)
+	row := db.DB.QueryRow("SELECT id, code, slug, created_at, updated_at FROM snippets WHERE slug = ?", slug)
 
 	err := row.Scan(&snippet.ID, &snippet.Code, &slugCol, &snippet.CreatedAt, &snippet.UpdatedAt)
 

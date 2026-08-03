@@ -14,6 +14,7 @@ function AppLayout() {
             </main>
             <Footer />
         </div>
+        
     )
 
 }
