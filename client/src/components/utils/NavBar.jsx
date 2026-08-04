@@ -7,6 +7,7 @@ import api from "../../api/axios.js"
 const NAV_ITEMS = [
     { label: "Home", to: "/home" },
     { label: "Sandbox", to: "/sandbox" },
+    { label: "My Snippets", to: "/sandbox/list" },
     { label: "Profile", to: "/profile" }
 ]
 
