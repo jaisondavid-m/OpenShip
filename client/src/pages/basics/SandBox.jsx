@@ -28,9 +28,17 @@ function SandBox() {
 
     useEffect(() => {
 
-        if (!id) return
-
         let ignore = false
+
+        if (!id) {
+            setCode(DEFAULT_CODE)
+            setPreviewDoc(DEFAULT_CODE)
+            setSaveId(null)
+            setPublicSlug(null)
+            setSlugInput("")
+            setStatusError("")
+            return 
+        }
 
         async function loadSnippet() {
 

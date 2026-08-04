@@ -4,6 +4,7 @@ import "time"
 
 type Snippet struct {
 	ID 			uint 		`json:"id"`
+	UserID 		uint 		`json:"user_id,omitempty"`
 	Slug 		*string		`json:"slug"`
 	Code 		string 		`json:"code"`
 	CreatedAt 	time.Time 	`json:"created_at"`

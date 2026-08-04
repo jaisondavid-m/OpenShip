@@ -35,3 +35,5 @@ CREATE TABLE IF NOT EXISTS snippets (
 
 ALTER TABLE snippets ADD COLUMN slug VARCHAR(60) NULL AFTER code;
 ALTER TABLE snippets ADD UNIQUE KEY uq_snippets_slug (slug);
+ALTER TABLE snippets ADD COLUMN user_id BIGINT UNSIGNED NULL AFTER id;
+ALTER TABLE snippets ADD INDEX idx_snippets_user_id (user_id);

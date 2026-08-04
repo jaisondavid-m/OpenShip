@@ -39,7 +39,10 @@ func Register(r *gin.Engine) {
 	sandbox := v1.Group("/sandbox")
 	{
 		sandbox.POST("", handlers.SaveSnippet)
+		sandbox.GET("", handlers.ListSnippets)
+		sandbox.GET("/:id",handlers.GetSnippet)
 		sandbox.GET("/:id", handlers.GetSnippet)
+		sandbox.DELETE("/:id", handlers.DeleteSnippet)
 	}
 
 	v1.GET("/public/:slug", handlers.GetPublicSnippetBySlug)
