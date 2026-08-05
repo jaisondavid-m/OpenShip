@@ -37,7 +37,7 @@ function SandBox() {
             setPublicSlug(null)
             setSlugInput("")
             setStatusError("")
-            return 
+            return
         }
 
         async function loadSnippet() {
@@ -106,14 +106,28 @@ function SandBox() {
         setCopiedPublic(false)
 
         try {
-            const res = await api.post("/sandbox", {
-                code,
-                slug: slugInput.trim() || undefined,
-            })
-            setSaveId(res.data.id)
-            setPublicSlug(res.data.slug || null)
-            setSlugInput(res.data.slug || "")
-            navigate(`/sandbox/${res.data.id}`, { replace: id })
+            if (saveId) {
+                await api.put(`/sandbox/${saveId}`, {
+                    code,
+                    slug: slugInput.trim() || undefined,
+                })
+                // setSaveId(res.data.id)
+                // setPublicSlug(res.data.slug || null)
+                // setSlugInput(res.data.slug || "")
+            } else {
+
+                const res = await api.post("/sandbox", {
+                    code,
+                    slug: slugInput.trim() || undefined,
+                })
+
+                setSaveId(res.data.id)
+                setPublicSlug(res.data.slug || null)
+                setSlugInput(res.data.slug || "")
+
+                navigate(`/sandbox/${res.data.id}`, { replace: id })
+            }
+            
         } catch (err) {
             setStatusError(err.response?.data?.error || "Failed to save snippet")
         } finally {

@@ -37,11 +37,12 @@ func Register(r *gin.Engine) {
 	}
 
 	sandbox := v1.Group("/sandbox")
+	sandbox.Use(middlewares.AuthRequired)
 	{
 		sandbox.POST("", handlers.SaveSnippet)
 		sandbox.GET("", handlers.ListSnippets)
 		sandbox.GET("/:id",handlers.GetSnippet)
-		sandbox.GET("/:id", handlers.GetSnippet)
+		sandbox.PUT("/:id", handlers.UpdateSnippet)
 		sandbox.DELETE("/:id", handlers.DeleteSnippet)
 	}
 

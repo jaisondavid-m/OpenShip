@@ -240,10 +240,15 @@ func UpdateSnippet(c *gin.Context) {
 
 	if affected == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "snippet updated",
-			"id": id,
-			"slug": slugValue,
+			"message": "snippet not found",
 		})
+		return 
 	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "snippet updated",
+		"id": id,
+		"slug": slugValue,
+	})
 
 }

@@ -3,6 +3,9 @@ import { Link } from "react-router-dom"
 
 import api from "../../api/axios.js"
 
+import CodeModal from "../../components/sandbox/CodeModal.jsx"
+import DeleteConfirmModal from "../../components/utils/DeleteConfirmModal.jsx"
+
 function SnippetsList() {
 
     const [snippets, setSnippets] = useState([])
@@ -14,6 +17,7 @@ function SnippetsList() {
     const [viewLoading, setViewLoading] = useState(false)
 
     const [deletingId, setDeletingId] = useState(null)
+    const [confirmTarget, setConfirmTarget] = useState(null)
 
     useEffect(() => {
         loadSnippets()
@@ -43,7 +47,7 @@ function SnippetsList() {
 
         try {
             const res = await api.get(`/sandbox/${id}`)
-            setViewCode(res.data.snippets.code)
+            setViewCode(res.data.snippet.code)
         } catch (err) {
             setViewCode("// Couldn't load this snippet")
         } finally {
@@ -57,9 +61,21 @@ function SnippetsList() {
         setViewCode("")
     }
 
-    async function handleDelete(id) {
+    function requestDelete(snippet) {
+        setConfirmTarget(snippet)
+    }
 
-        if (!window.confirm("Delete this snippet? This can't be undone.")) return 
+    function cancelDelete() {
+        if (deletingId) return 
+        setConfirmTarget(null)
+    }
+
+    async function confirmDelete(id) {
+
+        // if (!window.confirm("Delete this snippet? This can't be undone.")) return 
+
+        const id = confirmTarget?.id
+        if (!id) return 
 
         setDeletingId(id)
         setStatusError("")
@@ -67,6 +83,7 @@ function SnippetsList() {
         try {
             await api.delete(`/sandbox/${id}`)
             setSnippets((prev) => prev.filter((s) => s.id !== id))
+            setConfirmTarget(null)
         } catch (err) {
             setStatusError(err.response?.data?.error || "Couldn't delete that snippet.")
         } finally {
@@ -76,7 +93,7 @@ function SnippetsList() {
     }
 
     return (
-        <div className="mx-auto max-w-4xl px-6 py-10 font-sans text-os-text" >
+        <div className="min-h-screen mx-auto max-w-4xl px-6 py-10 font-sans text-os-text" >
             <div className="mb-6 flex items-center justify-between" >
                 <h1 className="font-mono text-sm uppercase tracking-wider text-os-faint" >
                     My Snippets
@@ -104,7 +121,66 @@ function SnippetsList() {
                     You haven't saved any snippets yet.
                 </p>
             ) : (
-                <div></div>
+                <div className="flex flex-col divid-y divide-os-border-soft rounded-md border
+                border-os-soft"
+                >
+                    {snippets.map((s) => (
+                        <div
+                            key={s.id}
+                            className="flex items-center justify-between gap-4 px-4 py-3"
+                        >   
+                            <div className="flex flex-col" >
+                                <span className="font-mono text-[13px] text-os-text" >
+                                    {s.slug ? s.slug : `#${s.id}`}
+                                </span>
+                                <span className="font-mono text-[11px] text-os-faint" >
+                                    updated {new Date(s.updated_at).toLocaleDateString()}
+                                </span>
+                            </div>
+                            <div className="flex items-center gap-4" >
+                                <button
+                                    type="button"
+                                    onClick={() => handleView(s.id)}
+                                    className="font-mono text-[11px] uppercase tracking-wider text-os-accent hover:underline"
+                                >
+                                    View
+                                </button>
+                                <Link
+                                    to={`/sandbox/${s.id}`}
+                                    className="font-mono text-[11px] uppercase tracking-wider text-os-accent hover:underline"
+                                >
+                                    Edit
+                                </Link>
+                                <button
+                                    type="button"
+                                    onClick={() => requestDelete(s.id)}
+                                    disabled={deletingId === s.id}
+                                    className="font-mono text-[11px] uppercase tracking-wider text-os-danger hover:underline disabled:opacity-50"
+                                >
+                                    {deletingId === s.id ? "Deleting" : "Delete"}
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {viewing && (
+                <CodeModal
+                    viewing={viewing}
+                    closeView={closeView}
+                    viewLoading={viewLoading}
+                    viewCode={viewCode}
+                />
+            )}
+
+            {confirmTarget && (
+                <DeleteConfirmModal
+                    target={confirmTarget}
+                    onCancel={cancelDelete}
+                    onConfirm={confirmDelete}
+                    deleting={deletingId === confirmTarget.id}
+                />
             )}
 
         </div>

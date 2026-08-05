@@ -1,18 +1,20 @@
 package middlewares
 
 import (
-
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 
 	"server/utils"
-
 )
 
 func AuthRequired(c *gin.Context) {
 
 	token, err := c.Cookie("token")
+
+	fmt.Println("TOKEN:",token)
+	fmt.Println("ERR:",err)
 
 	if err != nil || token == "" {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
