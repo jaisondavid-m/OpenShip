@@ -1,0 +1,17 @@
+.env.*
+!*.env.example
+
+.git
+.gitignore
+
+uploads/
+
+tmp/
+*.log
+*.exe 
+*.test
+.vscode/
+.idea/
+
+*.md
+README*
