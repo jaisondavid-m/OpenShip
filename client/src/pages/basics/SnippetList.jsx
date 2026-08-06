@@ -70,7 +70,7 @@ function SnippetsList() {
         setConfirmTarget(null)
     }
 
-    async function confirmDelete(id) {
+    async function confirmDelete() {
 
         // if (!window.confirm("Delete this snippet? This can't be undone.")) return 
 
