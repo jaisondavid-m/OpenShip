@@ -26,9 +26,9 @@ function randomManifestId() {
     return `MANIFEST #${hex}-${seq}`
 }
 
-function DeployConsole({ varient = "login" }) {
+function DeployConsole({ variant = "login" }) {
 
-    const script = useMemo(() => SCRIPTS[varient] || SCRIPTS.login, [varient])
+    const script = useMemo(() => SCRIPTS[variant] || SCRIPTS.login, [variant])
 
     const reduceMotion = useMemo(
         () =>
@@ -133,9 +133,9 @@ function DeployConsole({ varient = "login" }) {
             
             <div className="relative mt-10" >
                 <p className="mb-4 font-mono text-[11px] uppercase tracking-wider text-os-faint" >
-                    {varient === "register" ? "What you get" : "Recent shipments"}
+                    {variant === "register" ? "What you get" : "Recent shipments"}
                 </p>
-                {varient === "register" ? (
+                {variant === "register" ? (
                     <ul className="flex flex-col gap-3" >
                         {REGISTER_HIGHLIGHTS.map((line) => (
                             <li key={line} className="flex items-start gap-2.5 font-mono text-[12.5px] text-os-muted" >
@@ -165,7 +165,7 @@ function DeployConsole({ varient = "login" }) {
             </div>
 
             <div className="relative mt-5 border-t border-os-border-soft pt-5 font-mono text-[11.5px] text-os-faint" >
-                {FOOT_TEXT[varient]}
+                {FOOT_TEXT[variant]}
             </div>
 
         </aside>

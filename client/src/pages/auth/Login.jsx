@@ -19,6 +19,7 @@ function Login() {
     const [form, setForm] = useState({ email: "", password: "" })
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
 
     function handleChange(e) {
         setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
@@ -104,16 +105,26 @@ function Login() {
                                     Forgot password?
                                 </Link>
                             </span>
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="•••••••••"
-                                value={form.password}
-                                onChange={handleChange}
-                                autoComplete="current-password"
-                                required
-                                className={inputClasses}
-                            />
+                            <div className="relative" >
+                                <input
+                                    type={ showPassword ? "text" : "password"}
+                                    name="password"
+                                    placeholder="•••••••••"
+                                    value={form.password}
+                                    onChange={handleChange}
+                                    autoComplete="current-password"
+                                    required
+                                    className={inputClasses}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 text-xs
+                                    text-os-muted hover:text-os-accent"
+                                >
+                                    {showPassword ? "Hide" : "Show"}
+                                </button>
+                            </div>
                         </label>
                         {/* <label className="mb-[18px] block text-xs font-medium uppercase tracking-wider text-os-muted" >
                              
@@ -158,7 +169,7 @@ function Login() {
                 </div>
             </section>
             <DeployConsole
-                varient="login"
+                variant="login"
             />
         </div>
     )

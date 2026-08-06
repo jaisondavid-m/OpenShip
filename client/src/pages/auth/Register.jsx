@@ -188,7 +188,7 @@ function Register() {
             </section>
 
             <DeployConsole
-                varient="register"
+                variant="register"
             />
 
         </div>
