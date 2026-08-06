@@ -39,7 +39,7 @@ services:
       SMTP_USER: ${SMTP_PASSWORD}
       SMTP_FROM: ${SMTP_FROM}
       OTP_EXPIRY_MINUTES: ${OTP_EXPIRY_MINUTES}
-    voluems:
+    volumes:
       - uploads_data:/app/uploads
     depends_on:
       mysql:
