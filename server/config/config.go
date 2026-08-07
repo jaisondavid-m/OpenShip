@@ -83,3 +83,10 @@ func DSN() string {
 	)
 
 }
+
+func TiDBDSN() string {
+	return fmt.Sprintf(
+		"%s:%s@tcp(%s:%s)/%s?tls=tidb&parseTime=true&charset=utf8mb4&loc=Local",
+		DBUser, DBPassword, DBHost, DBPort, DBName,
+	)
+}

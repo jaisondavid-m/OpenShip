@@ -17,10 +17,15 @@ import (
 func main() {
 
 	// godotenv.Load()
-	
-	if err := db.Connect(config.DSN()); err != nil {
-		log.Fatalf("Failed to connect to database: %v", err)
+
+	if err := db.ConnectTiDB(config.TiDBDSN(), "cert/isrgrootx1.pem"); err != nil {
+		log.Fatalf("Failed to connect to database: %v",err)
 	}
+	
+	// if err := db.Connect(config.DSN()); err != nil {
+	// 	log.Fatalf("Failed to connect to database: %v", err)
+	// }
+	
 
 	defer db.DB.Close()
 
