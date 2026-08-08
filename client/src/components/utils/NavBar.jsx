@@ -123,7 +123,7 @@ function NavBar() {
                     }
                     <button
                         type="button"
-                        onClick={() => {
+                        onClick={async () => {
                             closeMobile();
                             await handleLogout();
                         }}
