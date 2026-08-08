@@ -1,8 +1,10 @@
 package main
 
 import (
+	"os"
 	"log"
 	"time"
+	"path/filepath"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -17,6 +19,21 @@ import (
 func main() {
 
 	// godotenv.Load()
+
+	cwd, _ := os.Getwd()
+	log.Println("Current directory:", cwd)
+
+	certPath := "cert/isrgrootx1.pem"
+
+	abs, _ := filepath.Abs(certPath)
+	log.Println("Absolute cert path:",abs)
+
+	_, err := os.Stat(certPath)
+	if err != nil {
+		log.Println("Certificate missing:", err)
+	}else {
+		log.Println("Certificate exists")
+	}
 
 	if err := db.ConnectTiDB(config.TiDBDSN(), "cert/isrgrootx1.pem"); err != nil {
 		log.Fatalf("Failed to connect to database: %v",err)

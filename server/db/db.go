@@ -1,16 +1,15 @@
 package db
 
 import (
-
-	"os"
-	"fmt"
-	"time"
 	"crypto/tls"
 	"crypto/x509"
 	"database/sql"
+	"fmt"
+	"os"
+	"path/filepath"
+	"time"
 
 	"github.com/go-sql-driver/mysql"
-
 )
 
 var DB *sql.DB
@@ -38,6 +37,11 @@ func Connect(dsn string) error {
 }
 
 func ConnectTiDB(dsn string, caCertPath string) error {
+
+	if !filepath.IsAbs(caCertPath) {
+		exePath, _ := os.Getwd()
+		caCertPath = filepath.Join(exePath, caCertPath)
+	}
 
 	rootCertPool := x509.NewCertPool()
 
