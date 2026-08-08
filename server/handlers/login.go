@@ -54,7 +54,8 @@ func Login(c *gin.Context) {
 		return 
 	}
 
-	c.SetCookie("token", token, 3600*24, "/", "", false, true)
+	c.SetSameSite(http.SameSiteNoneMode)
+	c.SetCookie("token", token, 3600*24, "/", "", true, true)
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "login successfully",
@@ -69,7 +70,7 @@ func Login(c *gin.Context) {
 }
 
 func Logout(c *gin.Context) {
-	c.SetCookie("token", "", -1, "/", "", false, true)
+	c.SetCookie("token", "", -1, "/", "", true, true)
 	c.JSON(http.StatusOK, gin.H{
 		"message": "logged out",
 	})
