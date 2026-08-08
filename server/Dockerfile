@@ -21,6 +21,8 @@ WORKDIR /app
 
 COPY --from=builder /out/server /app/server
 
+COPY cert ./cert
+
 RUN mkdir -p /app/uploads/avatars && chown -R app:app /app
 
 USER app
