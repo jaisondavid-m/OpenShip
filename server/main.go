@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/gin-contrib/cors"
-	"github.com/gin-contrib/secure"
+	// "github.com/gin-contrib/secure"
 	"github.com/gin-gonic/gin"
 
 	// "github.com/joho/godotenv"
@@ -82,14 +82,14 @@ func main() {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	r.Use(secure.New(secure.Config{
-		SSLRedirect: false,
-		STSSeconds: 315360000,
-		STSIncludeSubdomains: true,
-		FrameDeny: true,
-		ContentTypeNosniff: true,
-		BrowserXssFilter: true,
-	}))
+	// r.Use(secure.New(secure.Config{
+	// 	SSLRedirect: false,
+	// 	STSSeconds: 315360000,
+	// 	STSIncludeSubdomains: true,
+	// 	FrameDeny: true,
+	// 	ContentTypeNosniff: true,
+	// 	BrowserXssFilter: true,
+	// }))
 
 	
 
