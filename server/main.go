@@ -59,15 +59,6 @@ func main() {
 		gin.Recovery(),
 	)
 
-	r.Use(secure.New(secure.Config{
-		SSLRedirect: true,
-		STSSeconds: 315360000,
-		STSIncludeSubdomains: true,
-		FrameDeny: true,
-		ContentTypeNosniff: true,
-		BrowserXssFilter: true,
-	}))
-
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			config.CorsOrigin,
@@ -90,6 +81,17 @@ func main() {
 		AllowCredentials: true,
 		MaxAge: 12 * time.Hour,
 	}))
+
+	r.Use(secure.New(secure.Config{
+		SSLRedirect: true,
+		STSSeconds: 315360000,
+		STSIncludeSubdomains: true,
+		FrameDeny: true,
+		ContentTypeNosniff: true,
+		BrowserXssFilter: true,
+	}))
+
+	
 
 	// r.Static("/uploads", "./uploads")
 
