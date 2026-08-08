@@ -54,7 +54,7 @@ func main() {
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
-			"http://localhost:5173",
+			"https://openship.bitsathy.in",
 		},
 		AllowMethods: []string{
 			"GET",
