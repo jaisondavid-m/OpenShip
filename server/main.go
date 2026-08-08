@@ -83,7 +83,7 @@ func main() {
 	}))
 
 	r.Use(secure.New(secure.Config{
-		SSLRedirect: true,
+		SSLRedirect: false,
 		STSSeconds: 315360000,
 		STSIncludeSubdomains: true,
 		FrameDeny: true,
