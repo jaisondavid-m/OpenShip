@@ -74,6 +74,7 @@ func main() {
 			"Origin",
 			"Content-Type",
 			"Authorization",
+			"Cookie",
 		},
 		ExposeHeaders: []string{
 			"Content-Length",
