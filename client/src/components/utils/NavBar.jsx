@@ -125,7 +125,7 @@ function NavBar() {
                         type="button"
                         onClick={() => {
                             closeMobile();
-                            handleLogout();
+                            await handleLogout();
                         }}
                         className="mt-2 rounded-md border-t border-os-border-soft px-3 py-2.5 text-left font-mono text-xs uppercase
                         tracking-wider text-os-faint hover:text-os-danger"

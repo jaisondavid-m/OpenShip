@@ -1,12 +1,14 @@
 package main
 
 import (
-	"os"
 	"log"
-	"time"
+	"net/http"
+	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/secure"
 	"github.com/gin-gonic/gin"
 
 	// "github.com/joho/godotenv"
@@ -46,15 +48,29 @@ func main() {
 
 	defer db.DB.Close()
 
-	if config.AppEnv == "producation" {
+	if config.AppEnv == "production" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	r := gin.Default()
+	r := gin.New()
+
+	r.Use(
+		gin.Logger(),
+		gin.Recovery(),
+	)
+
+	r.Use(secure.New(secure.Config{
+		SSLRedirect: true,
+		STSSeconds: 315360000,
+		STSIncludeSubdomains: true,
+		FrameDeny: true,
+		ContentTypeNosniff: true,
+		BrowserXssFilter: true,
+	}))
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
-			"https://openship.bitsathy.in",
+			config.CorsOrigin,
 		},
 		AllowMethods: []string{
 			"GET",
@@ -75,7 +91,11 @@ func main() {
 		MaxAge: 12 * time.Hour,
 	}))
 
-	r.Static("/uploads", "./uploads")
+	// r.Static("/uploads", "./uploads")
+
+	r.StaticFS("/uploads",
+		http.Dir("./uploads"),
+	)
 
 	routes.Register(r)
 

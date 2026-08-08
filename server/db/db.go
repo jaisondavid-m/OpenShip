@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"server/config"
 	"time"
 
 	"github.com/go-sql-driver/mysql"
@@ -58,6 +59,7 @@ func ConnectTiDB(dsn string, caCertPath string) error {
 	if err := mysql.RegisterTLSConfig("tidb",&tls.Config{
 		RootCAs: rootCertPool,
 		MinVersion: tls.VersionTLS12,
+		ServerName: config.DBHost,
 	}); err != nil {
 		return fmt.Errorf("failed to register tls config: %w", err)
 	}
@@ -68,9 +70,9 @@ func ConnectTiDB(dsn string, caCertPath string) error {
 		return err
 	}
 
-	conn.SetMaxOpenConns(25)
-	conn.SetMaxIdleConns(25)
-	conn.SetConnMaxIdleTime(5*time.Minute)
+	conn.SetMaxOpenConns(20)
+	conn.SetMaxIdleConns(5)
+	conn.SetConnMaxIdleTime(30*time.Minute)
 
 	if err := conn.Ping(); err != nil {
 		return err
