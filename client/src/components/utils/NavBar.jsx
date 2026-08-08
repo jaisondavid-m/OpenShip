@@ -32,21 +32,21 @@ function NavBar() {
         } catch (err) {
             // ignoring it
         } finally {
-            navigate("login")
+            navigate("/login")
         }
 
     }
 
     return (
 
-        <header className="sticky top-0 z-20 border-b border-os-border-soft bg-os-bg/95 backdrop-blur" >
-            <div className="flex h-16 items-center justify-between px-6 sm:px-10" >
+        <header className="sticky top-0 z-20 border-b border-os-border-soft bg-os-bg/80 backdrop-blur-xl" >
+            <div className="flex h-[68px] items-center justify-between px-6 sm:px-12" >
 
                 <Link
                     to="/home"
-                    className="inline-flex items-baseline font-disaplay text-lg font-semibold tracking-tight text-os-text"
+                    className="group inline-flex items-baseline font-disaplay text-lg font-semibold tracking-tight text-os-text"
                 >
-                    OpenShip<span className="text-os-accent" >.</span>
+                    OpenShip<span className="text-os-accent transition group-hover:text-white" >.</span>
                 </Link>
 
                 <nav className="hidden items-center gap-8 lg:flex" >
@@ -59,8 +59,8 @@ function NavBar() {
                             }`}
                         >
                             <span
-                                className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                                    isActive(item.to) ? "bg-os-accent" : "bg-os-faint"
+                                className={`h-1.5 w-1.5 rounded-full transition-all ${
+                                    isActive(item.to) ? "bg-os-accent shadow-[0_0_8px_var(--os--accent)]" : "bg-os-faint"
                                 }`}
                             />
                             {item.label}
@@ -72,7 +72,7 @@ function NavBar() {
                     type="button"
                     onClick={handleLogout}
                     className="hidden font-mono text-[11px] uppercase tracking-wider text-os-faint transition-colors
-                    hover:text-os-danger lg:inline=flex"
+                    hover:text-os-danger lg:inline-flex"
                 >
                     Sign Out
                 </button>
@@ -95,7 +95,8 @@ function NavBar() {
             </div>
 
             {mobileOpen && (
-                <nav className="flex flex-col gap-1 border-t border-os-border-soft bg-os-panel px-6 py-4 lg:hidden" >
+                <nav className="flex flex-col gap-1 border-t border-os-border-soft bg-os-panel px-6 py-4 lg:hidden
+                animate-in slide-in-from-top-2" >
                     {
                         NAV_ITEMS.map((item) => (
                             <Link
